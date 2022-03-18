@@ -1,0 +1,20 @@
+name: build
+
+on: push
+jobs:
+  my-job:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 1
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: Clone upstream
+        run: git clone --depth 1 https://github.com/rakyll/hey
+      - name: Build
+        run: go build -o hey
+      - name: Run 5 second load test
+        run: hey -c 1 -q 1 -z 5 https://firecracker.exit.o6s.io/
