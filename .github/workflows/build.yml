@@ -26,6 +26,6 @@ jobs:
       - name: Clone upstream
         run: git clone --depth 1 https://github.com/rakyll/hey
       - name: Build
-        run: go build -o hey
+        run: cd hey && go build -o $HOME/hey
       - name: Run 5 second load test
-        run: hey -c 1 -q 1 -z 5 https://firecracker.exit.o6s.io/
+        run: $HOME/hey -c 1 -q 1 -z 5 https://firecracker.exit.o6s.io/
